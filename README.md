@@ -2,7 +2,9 @@
 
 **The 20% of FRM Part I that covers 80% of the exam.**
 
-A free, focused, single-file study tool for FRM Part I candidates. No signup. No install. Just open the file and study.
+A free, focused study tool for FRM Part I candidates. No signup. No install. Just click and study.
+
+🔗 **[Open the live app here](https://your-live-link-here.com)**
 
 ---
 
@@ -42,17 +44,9 @@ Built on the 80/20 principle: master these topics cold and you walk into the exa
 
 ## How to use
 
-**Option 1 — Local (simplest):**
-1. Download `index.html`
-2. Double-click to open in your browser
-3. Done
+Visit the **[live app](https://your-live-link-here.com)**, pick a topic from the sidebar, read through the concept and formulas, then test yourself with the practice question. Click an answer to instantly reveal the full worked solution.
 
-**Option 2 — GitHub Pages:**
-1. Fork this repo
-2. Go to Settings → Pages → Source → main branch
-3. Your copy goes live at `https://yourusername.github.io/hafzan-frm`
-
-No Node. No npm. No build step. One file.
+No install. No signup. Just study.
 
 ---
 
@@ -75,12 +69,6 @@ Navigate using the sidebar or the Previous / Next buttons.
 
 - LinkedIn: [linkedin.com/in/amaanullah-bhatti](https://www.linkedin.com/in/amaanullah-bhatti/)
 - GitHub: [github.com/amaanullah21](https://github.com/amaanullah21)
-
----
-
-## License
-
-MIT — free to use, share, and modify. If you find it useful, a star on the repo goes a long way.
 
 ---
 
