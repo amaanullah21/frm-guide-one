@@ -4,7 +4,7 @@
 
 A free, focused study tool for FRM Part I candidates. No signup. No install. Just click and study.
 
-🔗 **[Open the live app here](https://your-live-link-here.com)**
+🔗 **[Open the live app here](https://amaanullah21.github.io/frm-guide-one/)**
 
 ---
 
@@ -44,7 +44,7 @@ Built on the 80/20 principle: master these topics cold and you walk into the exa
 
 ## How to use
 
-Visit the **[live app](https://your-live-link-here.com)**, pick a topic from the sidebar, read through the concept and formulas, then test yourself with the practice question. Click an answer to instantly reveal the full worked solution.
+Visit the **[live app](https://amaanullah21.github.io/frm-guide-one/)**, pick a topic from the sidebar, read through the concept and formulas, then test yourself with the practice question. Click an answer to instantly reveal the full worked solution.
 
 No install. No signup. Just study.
 
