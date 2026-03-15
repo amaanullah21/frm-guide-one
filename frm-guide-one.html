@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hafzan FRM Part I Study Guide</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: #fff; color: #111; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* HEADER */
+  header { border-bottom: 1px solid #e8e8e8; background: #fff; position: sticky; top: 0; z-index: 100; }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 58px; }
+  .logo { display: flex; align-items: baseline; gap: 2px; cursor: pointer; text-decoration: none; }
+  .logo-bold { font-size: 20px; font-weight: 700; color: #111; letter-spacing: -0.5px; }
+  .logo-light { font-size: 20px; font-weight: 300; color: #111; letter-spacing: -0.5px; }
+  .logo-badge { margin-left: 8px; font-size: 11px; font-weight: 600; background: #111; color: #fff; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.04em; }
+  nav { display: flex; align-items: center; gap: 4px; }
+  .nav-tab { background: transparent; border: 1px solid transparent; border-radius: 7px; padding: 6px 14px; cursor: pointer; font-size: 13px; font-weight: 400; color: #666; font-family: inherit; transition: all 0.15s; }
+  .nav-tab.active { background: #f4f4f4; border-color: #e0e0e0; font-weight: 600; color: #111; }
+  .github-btn { margin-left: 8px; background: #111; color: #fff; border: none; border-radius: 7px; padding: 7px 14px; font-size: 13px; font-weight: 500; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+
+  /* LAYOUT */
+  main { flex: 1; }
+  .study-layout { display: flex; min-height: calc(100vh - 58px - 85px); }
+
+  /* SIDEBAR */
+  .sidebar { width: 220px; flex-shrink: 0; border-right: 1px solid #e8e8e8; padding: 16px 10px; background: #fafafa; overflow-y: auto; }
+  .sidebar-label { font-size: 11px; color: #bbb; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; padding: 0 4px; }
+  .topic-btn { width: 100%; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 8px; padding: 10px; cursor: pointer; margin-bottom: 4px; display: flex; align-items: flex-start; gap: 8px; transition: all 0.15s; font-family: inherit; }
+  .topic-btn.active { background: #fff; border-color: #e5e5e5; }
+  .topic-btn .t-icon { font-size: 14px; color: #bbb; flex-shrink: 0; width: 18px; text-align: center; margin-top: 1px; }
+  .topic-btn .t-name { font-size: 12.5px; font-weight: 400; color: #666; line-height: 1.35; }
+  .topic-btn.active .t-name { font-weight: 600; color: #111; }
+  .topic-btn .t-tag { font-size: 11px; color: #bbb; margin-top: 2px; }
+
+  /* MAIN CONTENT */
+  .content { flex: 1; padding: 28px 32px; overflow-y: auto; }
+  .topic-tag-label { font-size: 11px; color: #bbb; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 4px; }
+  .topic-title { font-size: 22px; font-weight: 700; color: #111; letter-spacing: -0.3px; margin-bottom: 20px; }
+
+  /* CARDS */
+  .card { border: 1px solid #e8e8e8; border-radius: 10px; padding: 20px; margin-bottom: 12px; background: #fff; }
+  .card-label { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #bbb; margin-bottom: 8px; }
+  .card-title { font-size: 14px; font-weight: 600; color: #111; margin-bottom: 10px; }
+  .card-body { font-size: 14px; line-height: 1.85; color: #555; white-space: pre-line; }
+  .formula-block { background: #f7f7f7; border: 1px solid #ebebeb; border-radius: 8px; padding: 14px 16px; font-family: 'Courier New', monospace; font-size: 12.5px; line-height: 1.9; margin-bottom: 14px; white-space: pre-wrap; color: #1a1a1a; }
+  .note { display: flex; gap: 8px; font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 5px; }
+  .note-arrow { color: #ccc; flex-shrink: 0; }
+
+  /* QUESTION */
+  .opt-btn { width: 100%; text-align: left; background: #f7f7f7; border: 1px solid #e5e5e5; border-radius: 8px; padding: 11px 14px; cursor: pointer; font-size: 13.5px; font-family: inherit; color: #222; margin-bottom: 8px; transition: all 0.15s; }
+  .opt-btn:hover:not(:disabled) { background: #f0f0f0; }
+  .opt-btn.correct { background: #edfaf1; border-color: #6dcc8a; color: #1a6e35; }
+  .opt-btn.wrong { background: #fdf0f0; border-color: #e8a0a0; color: #9b2a2a; }
+  .opt-btn.dimmed { color: #bbb; }
+  .explanation { background: #f7f7f7; border-radius: 8px; padding: 16px; margin-top: 4px; font-size: 13px; line-height: 1.8; color: #555; border-left: 3px solid #ddd; white-space: pre-wrap; display: none; }
+  .explanation strong { color: #111; display: block; margin-bottom: 8px; }
+
+  /* NAV BUTTONS */
+  .nav-row { display: flex; justify-content: space-between; margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee; }
+  .nav-prev, .nav-next { background: #f4f4f4; border: 1px solid #e0e0e0; border-radius: 8px; padding: 9px 18px; cursor: pointer; font-size: 13px; font-family: inherit; color: #333; transition: all 0.15s; }
+  .nav-prev:disabled, .nav-next:disabled { color: #ccc; cursor: default; }
+  .nav-next:not(:disabled) { background: #111; border-color: #111; color: #fff; }
+
+  /* ABOUT PAGE */
+  .about-wrap { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+  .about-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #bbb; margin-bottom: 14px; }
+  .about-h1 { font-size: 34px; font-weight: 700; color: #111; line-height: 1.2; margin-bottom: 20px; letter-spacing: -0.5px; }
+  .about-lead { font-size: 16px; line-height: 1.8; color: #555; }
+  .about-divider { border-top: 1px solid #eee; margin: 48px 0; }
+  .about-h2 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 20px; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 48px; }
+  .stat-card { background: #f7f7f7; border-radius: 10px; padding: 18px 20px; }
+  .stat-num { font-size: 28px; font-weight: 700; color: #111; line-height: 1; }
+  .stat-label { font-size: 13px; color: #888; margin-top: 4px; }
+  .topic-list-item { display: flex; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0f0f0; }
+  .tli-icon { font-size: 15px; width: 24px; text-align: center; color: #bbb; }
+  .tli-name { font-size: 14px; font-weight: 500; color: #111; }
+  .tli-tag { font-size: 12px; color: #bbb; margin-top: 1px; }
+  .author-row { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+  .author-avatar { width: 52px; height: 52px; border-radius: 50%; background: #111; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; font-weight: 700; color: #fff; }
+  .author-name { font-size: 16px; font-weight: 600; color: #111; }
+  .author-aka { font-size: 13px; color: #aaa; margin-top: 2px; }
+  .link-btn { display: inline-flex; align-items: center; gap: 6px; background: #f4f4f4; border: 1px solid #e5e5e5; border-radius: 8px; padding: 8px 14px; font-size: 13px; color: #333; text-decoration: none; font-weight: 500; }
+  .links-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid #e8e8e8; background: #fafafa; padding: 28px 24px; }
+  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  .footer-logo { display: flex; align-items: baseline; gap: 2px; margin-bottom: 5px; }
+  .footer-copy { font-size: 12px; color: #aaa; }
+  .footer-links { display: flex; gap: 16px; align-items: center; }
+  .footer-links a { font-size: 13px; color: #666; text-decoration: none; }
+  .footer-sep { color: #ddd; }
+  .footer-tag { font-size: 13px; color: #bbb; }
+
+  /* HIDDEN */
+  .page { display: none; }
+  .page.active { display: block; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" onclick="showPage('study')">
+      <span class="logo-bold">Hafzan </span>
+      <span class="logo-light">  FRM Guide</span>
+      <span class="logo-badge">PART I</span>
+    </a>
+    <nav>
+      <button class="nav-tab active" id="tab-study" onclick="showPage('study')">Study</button>
+      <button class="nav-tab" id="tab-about" onclick="showPage('about')">About</button>
+      <a class="github-btn" href="https://github.com/amaanullah21" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.32-1.74-1.32-1.74-1.08-.74.08-.72.08-.72 1.2.08 1.82 1.22 1.82 1.22 1.06 1.82 2.8 1.3 3.48.98.1-.76.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.3.46-2.38 1.22-3.22-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.22a11.4 11.4 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.54 3.28-1.22 3.28-1.22.66 1.66.24 2.88.12 3.18.76.84 1.22 1.92 1.22 3.22 0 4.6-2.8 5.62-5.48 5.92.44.38.82 1.1.82 2.22v3.3c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- STUDY PAGE -->
+  <div class="page active" id="page-study">
+    <div class="study-layout">
+      <div class="sidebar">
+        <div class="sidebar-label">Topics</div>
+        <div id="sidebar-topics"></div>
+      </div>
+      <div class="content" id="topic-content"></div>
+    </div>
+  </div>
+
+  <!-- ABOUT PAGE -->
+  <div class="page" id="page-about">
+    <div class="about-wrap">
+      <div class="about-eyebrow">About this project</div>
+      <h1 class="about-h1">The 20% of FRM Part I<br>that covers 80% of the exam.</h1>
+      <p class="about-lead">FRM Part I covers hundreds of pages of material. This app cuts through the noise — isolating the eight highest-yield topics, presenting every key formula with clear annotations, and testing you with real exam-style questions and worked solutions.</p>
+      <div class="about-divider"></div>
+      <h2 class="about-h2">What's inside</h2>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Core topics</div></div>
+        <div class="stat-card"><div class="stat-num">20+</div><div class="stat-label">Key formulas</div></div>
+        <div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Practice questions</div></div>
+        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Free to use</div></div>
+      </div>
+      <h2 class="about-h2">Topics covered</h2>
+      <div id="about-topics"></div>
+      <div class="about-divider"></div>
+      <h2 class="about-h2">Built by</h2>
+      <div class="author-row">
+        
+        <div>
+          <div class="author-name">Amaanullah Bhatti (Hafzan Osmanoğlu)</div>
+          <div class="author-aka">Junior Risk Analyst</div>
+        </div>
+      </div>
+      <div class="links-row">
+        <a class="link-btn" href="https://www.linkedin.com/in/amaanullah-bhatti/" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#0077b5"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.8 0 0 .77 0 1.72v20.56C0 23.23.8 24 1.77 24h20.45C23.2 24 24 23.23 24 22.28V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+          LinkedIn
+        </a>
+        <a class="link-btn" href="https://github.com/amaanullah21" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#111"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.32-1.74-1.32-1.74-1.08-.74.08-.72.08-.72 1.2.08 1.82 1.22 1.82 1.22 1.06 1.82 2.8 1.3 3.48.98.1-.76.42-1.3.76-1.6-2.66-.3-5.46-1.33-5.46-5.93 0-1.3.46-2.38 1.22-3.22-.12-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.22a11.4 11.4 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.54 3.28-1.22 3.28-1.22.66 1.66.24 2.88.12 3.18.76.84 1.22 1.92 1.22 3.22 0 4.6-2.8 5.62-5.48 5.92.44.38.82 1.1.82 2.22v3.3c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">
+        <span style="font-size:15px;font-weight:700;color:#111">Hafzan</span>
+        <span style="font-size:15px;font-weight:300;color:#111">FRM Guide</span>
+      </div>
+      <div class="footer-copy">© 2026 Amaanullah Bhatti (Hafzan Osmanoğlu). All rights reserved.</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/amaanullah-bhatti/" target="_blank">LinkedIn</a>
+      <span class="footer-sep">|</span>
+      <a href="https://github.com/amaanullah21" target="_blank">GitHub</a>
+      <span class="footer-sep">|</span>
+      <span class="footer-tag">FRM Part I Study Guide</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const topics = [
+  {
+    icon:"↘", title:"VaR & Expected Shortfall", tag:"Valuation & Risk Models",
+    sections:[
+      {type:"concept", title:"What is VaR?", content:"Value at Risk answers: how much can I lose, at a given confidence level, over a given time horizon?\n\nIt is the maximum loss NOT exceeded with a given probability. A 1-day 99% VaR of $1M means there is only a 1% chance of losing MORE than $1M in a single day.\n\nVaR does not tell you the loss if you breach the threshold — that is where Expected Shortfall comes in."},
+      {type:"formula", title:"Parametric VaR (most tested)", formula:"VaR = z × σ × √T × Portfolio Value\n\nz = 1.645  →  95% confidence\nz = 2.326  →  99% confidence\nz = 1.960  →  97.5% confidence\n\nScale daily → T days:  VaR_T = VaR_1day × √T", notes:["σ = daily standard deviation","T = time horizon in days","Assumes zero mean return (common in exams)","Higher confidence → higher z → higher VaR"]},
+      {type:"formula", title:"Expected Shortfall (ES)", formula:"ES = E[Loss | Loss > VaR]\n\nFor normal distribution:\nES = μ + σ × φ(z) / (1 − c)", notes:["φ(z) = standard normal PDF at cutoff z","c = confidence level (e.g. 0.99)","ES ≥ VaR always","ES is coherent — VaR is NOT (not subadditive)","Basel III moved from VaR to ES for this reason"]},
+      {type:"practical", title:"Practical use & exam traps", content:"Banks use VaR daily to set trading desk limits. Regulators require banks to report VaR.\n\nKey exam trap: VaR is NOT subadditive — combining two positions can produce a higher VaR than the sum of individual VaRs. ES is subadditive and therefore coherent.\n\nAnother trap: VaR says nothing about the size of losses beyond the threshold. A 99% VaR of $1M could mean losses of $1.01M or $100M on bad days."},
+      {type:"question", q:"A portfolio has daily σ = $200,000. Assuming zero mean and normality, what is the 10-day 99% VaR?", opts:["$1,472,518","$465,842","$2,326,000","$632,456"], ans:0, exp:"Step 1: z for 99% = 2.326\nStep 2: 1-day VaR = 2.326 × $200,000 = $465,200\nStep 3: Scale to 10 days: $465,200 × √10 = $465,200 × 3.1623 ≈ $1,472,518\n\nFormula: VaR_T = VaR_1day × √T"}
+    ]
+  },
+  {
+    icon:"◈", title:"Options: Binomial & BSM", tag:"Valuation & Risk Models",
+    sections:[
+      {type:"concept", title:"Two models you must master", content:"Binomial Tree: discrete time model. Stock goes up or down each period. Works for American options (early exercise).\n\nBlack-Scholes-Merton (BSM): continuous time model. Assumes lognormal stock prices, constant volatility, no dividends. European options only.\n\nBoth use risk-neutral pricing — we do not need real probabilities, only the risk-free rate and volatility."},
+      {type:"formula", title:"Binomial tree — risk neutral pricing", formula:"u = e^(σ√Δt)        d = 1/u\n\np = (e^(rΔt) − d) / (u − d)\n\nOption Price = e^(−rΔt) × [p·f_u + (1−p)·f_d]", notes:["u = up factor, d = down factor","p = risk-neutral probability of up move","r = risk-free rate, Δt = time step length","f_u / f_d = option payoff in each node","For 2-step trees: work backwards from expiry"]},
+      {type:"formula", title:"Black-Scholes-Merton formula", formula:"Call = S₀N(d₁) − Ke^(−rT)N(d₂)\nPut  = Ke^(−rT)N(−d₂) − S₀N(−d₁)\n\nd₁ = [ln(S₀/K) + (r + σ²/2)T] / (σ√T)\nd₂ = d₁ − σ√T\n\nPut-Call Parity: C − P = S₀ − Ke^(−rT)", notes:["N(d) = cumulative standard normal CDF","S₀ = spot price, K = strike price","r = continuous risk-free rate, T = years to expiry","σ = annual volatility"]},
+      {type:"formula", title:"The Greeks — all five", formula:"Delta  (Δ): ∂V/∂S       price sensitivity\nGamma (Γ): ∂²V/∂S²    rate of delta change\nVega  (ν): ∂V/∂σ       volatility sensitivity\nTheta (Θ): ∂V/∂T       time decay (usually negative)\nRho   (ρ): ∂V/∂r       interest rate sensitivity", notes:["Call delta = N(d₁), between 0 and 1","Put delta = N(d₁) − 1, between −1 and 0","Gamma is identical for calls and puts","ATM options have the highest gamma and vega","Long options = positive gamma, positive vega"]},
+      {type:"question", q:"A call has delta = 0.65 and gamma = 0.04. If the stock rises by $2, what is the approximate new delta?", opts:["0.61","0.69","0.73","0.57"], ans:2, exp:"New delta ≈ old delta + gamma × ΔS\nNew delta ≈ 0.65 + 0.04 × 2 = 0.65 + 0.08 = 0.73\n\nGamma tells you how quickly you must re-hedge your delta position as the stock moves."}
+    ]
+  },
+  {
+    icon:"⇄", title:"Forwards, Futures & Swaps", tag:"Financial Markets & Products",
+    sections:[
+      {type:"concept", title:"The core idea", content:"All three are derivative contracts — their value derives from an underlying asset.\n\nForward: private OTC contract to buy/sell at a set price on a future date. No daily settlement.\n\nFutures: exchange-traded forward. Daily mark-to-market, margin accounts, standardized terms.\n\nSwap: agreement to exchange cash flows periodically. Most common is the fixed-for-floating interest rate swap."},
+      {type:"formula", title:"Forward pricing — cost of carry model", formula:"F₀ = S₀ × e^(rT)              no dividends\nF₀ = S₀ × e^((r−q)T)         continuous dividend yield q\nF₀ = (S₀ − I) × e^(rT)       discrete income with PV = I\nF₀ = S₀ × e^((r−rf)T)        currency forward\n\nForward value at time t:\nf = (F₀ − K) × e^(−r(T−t))", notes:["S₀ = spot price today, T = time to delivery","Dividend yield reduces cost of carry","I = PV of known cash flows","rf = foreign risk-free rate for FX forwards"]},
+      {type:"formula", title:"Interest rate swap valuation", formula:"V_swap (pay fixed) = B_float − B_fixed\n\nB_fixed = Σ [c × e^(−r_i·t_i)] + L × e^(−r_n·t_n)\nB_float ≈ L  (at each reset date)\n\nSwap rate:  s = (1 − P(0,T)) / Σ P(0,t_i)", notes:["L = notional principal","c = fixed coupon payment each period","P(0,t) = discount factor","At initiation swap value = 0","Floating leg resets to par at each payment date"]},
+      {type:"practical", title:"Practical use & exam traps", content:"Hedging with futures: an airline buys crude oil futures to lock in fuel costs. A wheat farmer sells wheat futures to lock in selling price.\n\nInterest rate swap: a company borrowed at floating rate but wants certainty. It enters a swap paying fixed, receiving floating — converting to fixed rate debt.\n\nKey exam trap — basis risk: basis = spot − futures. Futures hedge is imperfect if hedged asset differs from futures underlying.\n\nConvergence: at expiry, futures price = spot price (basis = 0)."},
+      {type:"question", q:"A stock trades at $100. Risk-free rate = 5% (continuous). Continuous dividend yield = 2%. What is the 6-month forward price?", opts:["$101.51","$102.53","$105.00","$103.05"], ans:0, exp:"F₀ = S₀ × e^((r−q)T)\nF₀ = 100 × e^((0.05 − 0.02) × 0.5)\nF₀ = 100 × e^(0.015)\nF₀ = 100 × 1.01511 = $101.51\n\nThe dividend yield reduces the cost of carry."}
+    ]
+  },
+  {
+    icon:"≋", title:"Duration & Convexity", tag:"Financial Markets & Products",
+    sections:[
+      {type:"concept", title:"Why duration matters", content:"Bond prices move inversely with interest rates — but by how much? Duration answers this.\n\nMacaulay Duration: weighted average time to receive cash flows. Measured in years.\n\nModified Duration: actual price sensitivity to yield changes. The exam workhorse.\n\nConvexity: duration assumes a linear price-yield relationship, but it is actually curved. Convexity corrects for this and always adds value."},
+      {type:"formula", title:"Duration formulas", formula:"Macaulay Duration = Σ [t × PV(CF_t)] / Bond Price\n\nModified Duration = Macaulay Duration / (1 + y/m)\n\nPrice change:\nΔP/P ≈ −D_mod × ΔY", notes:["y = yield to maturity, m = compounding periods/year","Longer maturity → higher duration","Higher coupon → lower duration","Higher yield → lower duration","Zero-coupon bond: D_mac = T exactly"]},
+      {type:"formula", title:"Convexity adjustment", formula:"ΔP/P ≈ −D_mod × ΔY + ½ × Convexity × (ΔY)²\n\nConvexity = Σ[t(t+1) × PV(CF_t)] / [P × (1+y)²]", notes:["Convexity term is always positive — reduces loss","Must use convexity for large yield moves","More convex bond outperforms for same duration","Callable bonds have negative convexity","Duration alone overestimates price fall"]},
+      {type:"practical", title:"Practical use & exam traps", content:"Portfolio immunization: a pension fund with liabilities due in 10 years buys bonds with duration = 10 years. When rates change, bond value changes offset liability changes.\n\nConvexity trade: two bonds with same duration but different convexity — prefer the more convex one. For any yield move, higher convexity means less loss (rates up) and more gain (rates down).\n\nKey exam trap: duration is accurate only for small yield changes. For moves above ~50 bps, always include the convexity term."},
+      {type:"question", q:"A bond has modified duration = 7.5 and convexity = 80. Yields rise by 100 bps. What is the approximate % price change?", opts:["−7.10%","−7.50%","−6.90%","−8.00%"], ans:0, exp:"ΔP/P ≈ −D_mod × ΔY + ½ × Convexity × (ΔY)²\n\n= −7.5 × 0.01 + 0.5 × 80 × (0.01)²\n= −0.075 + 0.004\n= −0.071 = −7.10%\n\nThe convexity term (+0.40%) partially offsets the duration-driven price loss."}
+    ]
+  },
+  {
+    icon:"σ", title:"EWMA, GARCH & Monte Carlo", tag:"Quantitative Analysis",
+    sections:[
+      {type:"concept", title:"Why these models exist", content:"Simple historical volatility treats all past returns equally — but volatility clusters. High-vol days tend to follow high-vol days.\n\nEWMA: gives more weight to recent observations. Simple, no mean reversion built in.\n\nGARCH(1,1): more sophisticated — includes mean reversion toward a long-run variance level.\n\nMonte Carlo: simulate thousands of random paths to price complex derivatives or estimate VaR when closed-form formulas do not exist."},
+      {type:"formula", title:"EWMA model", formula:"σ²_n = λ × σ²_(n−1) + (1−λ) × r²_(n−1)\n\nRiskMetrics standard:  λ = 0.94 (daily data)", notes:["λ = decay factor, between 0 and 1","Higher λ → more weight on older data → smoother","Lower λ → more reactive to recent shocks","No long-run mean reversion in EWMA","EWMA is GARCH with ω = 0 and β = λ"]},
+      {type:"formula", title:"GARCH(1,1) model", formula:"σ²_n = ω + α × r²_(n−1) + β × σ²_(n−1)\n\nLong-run variance:  σ²_L = ω / (1 − α − β)\n\nMean reversion condition:  α + β < 1", notes:["ω = constant weight on long-run variance","α = ARCH term (weight on last shock)","β = GARCH term (weight on last variance)","α + β close to 1 → slow mean reversion","EWMA: set ω = 0, α = 1−λ, β = λ"]},
+      {type:"formula", title:"Monte Carlo simulation", formula:"S_T = S₀ × exp[(μ − σ²/2)T + σ√T × Z]\n\nZ ~ N(0,1)  (random draw each simulation)\n\nFor VaR via MC:\n1. Simulate N paths of portfolio value\n2. Sort resulting losses\n3. VaR = loss at (1−c)th percentile", notes:["Requires thousands of simulations for accuracy","Can handle any payoff including path-dependent options","More flexible than parametric VaR","μ − σ²/2 is the drift correction for lognormal prices"]},
+      {type:"question", q:"GARCH(1,1) with ω = 0.000002, α = 0.08, β = 0.90. Yesterday's variance = 0.0001, yesterday's return = −0.02. What is today's variance?", opts:["0.000124","0.000102","0.000134","0.000092"], ans:0, exp:"σ²_n = ω + α × r²_(n−1) + β × σ²_(n−1)\n\n= 0.000002 + 0.08 × (0.02)² + 0.90 × 0.0001\n= 0.000002 + 0.000032 + 0.000090\n= 0.000124\n\nNote: α + β = 0.98 < 1 → model has mean reversion.\nLong-run variance = 0.000002 / (1 − 0.98) = 0.0001"}
+    ]
+  },
+  {
+    icon:"∿", title:"Distributions & Regression", tag:"Quantitative Analysis",
+    sections:[
+      {type:"concept", title:"The statistical backbone of FRM", content:"Everything in risk management — VaR, model validation, hypothesis testing — rests on statistics.\n\nKey distributions: Normal (most common in exams), lognormal (stock prices), Student's t (fat tails).\n\nRegression: used to estimate beta, model relationships, run backtests.\n\nHypothesis testing: used to validate VaR models and check if relationships are statistically significant."},
+      {type:"formula", title:"Key distribution facts", formula:"Normal X ~ N(μ, σ²):\n  68% within ±1σ\n  95% within ±1.96σ\n  99% within ±2.576σ\n\nLognormal: if ln(X) ~ N(μ,σ²) then X is lognormal\n  Stock prices: S_T = S₀ × e^(μT + σ√T·Z)\n\nStudent's t: fatter tails than normal\n  Use when sample size is small (n < 30)", notes:["Skewness = 0 for normal distribution","Excess kurtosis = 0 for normal (raw kurtosis = 3)","Fat tails = excess kurtosis > 0 (leptokurtic)","Financial returns have fat tails — t-dist fits better","Lognormal keeps stock prices positive"]},
+      {type:"formula", title:"Linear regression (OLS)", formula:"Y = α + β × X + ε\n\nβ = Cov(X,Y) / Var(X) = ρ × (σ_Y / σ_X)\nα = Ȳ − β × X̄\n\nR² = explained variation / total variation\nt-stat = β / SE(β)     [significant if |t| > 1.96]", notes:["OLS minimizes sum of squared residuals","β in CAPM = systematic risk of the asset","R² = square of correlation coefficient ρ","t-stat > 1.96 → significant at 95% confidence","Residuals should be normal, homoskedastic, uncorrelated"]},
+      {type:"practical", title:"Practical use & exam traps", content:"VaR backtesting: if 99% VaR is correct, expect exceptions on 1% of days. Over 250 trading days, expect ~2-3 exceptions. Too many = model is underestimating risk.\n\nBeta estimation: regress stock returns on market returns. Slope = beta. Used in CAPM and portfolio risk attribution.\n\nFat tails in practice: the 2008 crisis produced moves modeled as 25-standard-deviation events under the normal distribution. Student's t would have predicted them far better."},
+      {type:"question", q:"A 99% VaR model is backtested over 500 trading days. How many exceptions are expected, and what is the acceptable range?", opts:["5 expected; 1–10 acceptable","5 expected; 2–8 acceptable","10 expected; 5–15 acceptable","1 expected; 0–3 acceptable"], ans:0, exp:"Expected exceptions = (1 − confidence) × days\n= 0.01 × 500 = 5 exceptions\n\nStandard deviation:\nσ = √(500 × 0.01 × 0.99) ≈ 2.22\n\nAcceptable range (±2σ): 5 ± 4.44 ≈ 1 to 10\n\nBasel traffic light (250-day backtest):\nGreen = 0–4, Yellow = 5–9, Red = 10+"}
+    ]
+  },
+  {
+    icon:"!", title:"Financial Disasters", tag:"Foundations of Risk Management",
+    sections:[
+      {type:"concept", title:"Why case studies are tested", content:"GARP believes risk managers learn best from real disasters. Every case study illustrates a specific type of risk management failure. Exams directly test what went wrong and what should have been done.\n\nKnow these four cases cold. Each typically generates 1–2 direct questions."},
+      {type:"formula", title:"LTCM collapse (1998)", formula:"Loss: $4.6 billion in weeks\n\nRoot causes:\n• Extreme leverage (~250:1 off-balance-sheet)\n• Model risk: assumed normal distributions, missed fat tails\n• Liquidity risk: positions too large to unwind\n• Correlation breakdown: all positions moved together\n• Crowded trades: many banks held identical positions", notes:["Founded by Nobel laureates Merton and Scholes","Strategy: convergence/spread arbitrage trades","Trigger: Russian debt default, August 1998","Fed organized $3.6B bailout by 14 banks","Lesson: model risk + liquidity risk + leverage = catastrophe"]},
+      {type:"formula", title:"2008 Global Financial Crisis", formula:"Trigger: US subprime mortgage market collapse\n\nRoot causes:\n• Originate-to-distribute model removed incentives\n• CDOs: complex, poorly understood, AAA-rated junk\n• Credit rating agency conflicts of interest\n• Excessive leverage across the entire system\n• Liquidity crunch: interbank market froze\n• Systemic and contagion risk ignored", notes:["Key firms: Bear Stearns, Lehman Brothers, AIG","AIG wrote CDS on CDOs without capital reserves","Lehman: $600B assets → largest bankruptcy ever","CDO = pooled mortgages sliced into tranches","Senior tranches rated AAA — turned out near-worthless"]},
+      {type:"formula", title:"Barings (1995) & Metallgesellschaft (1993)", formula:"BARINGS — Nick Leeson:\n• Unauthorized futures speculation on Nikkei 225\n• Loss: £827M → Barings went bankrupt\n• Leeson controlled both trading AND back-office\n• Lesson: operational risk, no segregation of duties\n\nMETALLGESELLSCHAFT:\n• Sold long-term oil contracts, hedged with short-term futures\n• Oil prices fell → massive margin calls on rollover\n• Loss: $1.3 billion\n• Lesson: rollover and liquidity risk in futures hedging", notes:["Barings was a 233-year-old bank","Leeson hid losses in error account 88888","MG hedge was economically sound, operationally disastrous","Both are classic operational and liquidity risk failures"]},
+      {type:"question", q:"Which BEST describes the primary risk management failure at LTCM?", opts:["Unauthorized trading by a rogue trader","Underestimation of liquidity risk and correlation breakdown under stress","Credit losses from subprime mortgage exposure","Interest rate risk from duration mismatch"], ans:1, exp:"LTCM's core failure was liquidity risk + model risk + correlation breakdown.\n\nModels assumed normal market correlations. When Russia defaulted in 1998, all positions moved against them simultaneously. Positions were too large to exit without crashing the market.\n\nOption A describes Barings.\nOption C describes the 2008 GFC.\nOption D is unrelated to LTCM."}
+    ]
+  },
+  {
+    icon:"§", title:"GARP Code of Conduct", tag:"Foundations of Risk Management",
+    sections:[
+      {type:"concept", title:"Easy marks — never skip", content:"The GARP Code of Conduct typically yields 2–4 easy questions. It is entirely conceptual — no formulas. Learn the principles and you will answer these in under a minute each.\n\nCovers: professional integrity, confidentiality, conflicts of interest, risk management practices, and handling violations."},
+      {type:"formula", title:"Core principles", formula:"1. Professional integrity\n   Act with honesty, diligence, and competence\n\n2. Conflicts of interest\n   Disclose and avoid; client interest comes first\n\n3. Confidentiality\n   Never use non-public information for personal gain\n\n4. Risk management practices\n   Promote sound practices; report violations\n\n5. Compliance with law\n   Follow all applicable laws and regulations", notes:["FRM holders must report code violations","Cannot trade on material non-public information","Gifts creating conflicts of interest must be disclosed","Duty to employer does NOT override ethical/legal duty","Must maintain competence through continuing education"]},
+      {type:"practical", title:"Exam scenarios to know", content:"Scenario 1: you discover your firm is misrepresenting VaR to regulators. → You must report this, even if it means reporting your own employer.\n\nScenario 2: a client offers you a gift for favorable trade execution. → Disclose to employer; likely must decline if it creates a conflict.\n\nScenario 3: you learn material non-public information about a company. → Cannot trade on it. Must maintain confidentiality.\n\nScenario 4: your model has a known limitation. → Must disclose to users. Cannot present results as more reliable than they are.\n\nKey principle: when in doubt, the answer that prioritizes client interests and transparency is almost always correct."},
+      {type:"question", q:"An FRM charterholder discovers their firm's models underestimate tail risk. Management has been informed but chose to ignore it. What is the most appropriate next step?", opts:["Accept management's decision — responsibility now lies with them","Escalate further within the firm, or to regulators if necessary","Resign immediately to protect personal reputation","Adjust personal trades using knowledge of the model flaw"], ans:1, exp:"Under the GARP Code, a charterholder must promote sound risk management practices and cannot remain silent about material failures.\n\nThe correct answer is B — escalate further, including to regulators if internal escalation fails.\n\nOption A is wrong: transferring responsibility upward does not discharge ethical obligation.\nOption C may eventually be necessary but is not the first step.\nOption D is a clear ethical violation."}
+    ]
+  }
+];
+
+let currentTopic = 0;
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function buildSidebar() {
+  const el = document.getElementById('sidebar-topics');
+  el.innerHTML = topics.map((t, i) => `
+    <button class="topic-btn ${i===0?'active':''}" onclick="loadTopic(${i})" id="sbtn-${i}">
+      <span class="t-icon">${t.icon}</span>
+      <div>
+        <div class="t-name">${t.title}</div>
+        <div class="t-tag">${t.tag}</div>
+      </div>
+    </button>`).join('');
+}
+
+function buildAboutTopics() {
+  document.getElementById('about-topics').innerHTML =
+    topics.map(t => `<div class="topic-list-item"><span class="tli-icon">${t.icon}</span><div><div class="tli-name">${t.title}</div><div class="tli-tag">${t.tag}</div></div></div>`).join('');
+}
+
+function loadTopic(i) {
+  currentTopic = i;
+  document.querySelectorAll('.topic-btn').forEach((b,j) => b.classList.toggle('active', j===i));
+  const t = topics[i];
+  const content = document.getElementById('topic-content');
+
+  let html = `<div class="topic-tag-label">${t.tag}</div>
+    <div class="topic-title">${t.icon} ${t.title}</div>`;
+
+  t.sections.forEach((s, si) => {
+    if (s.type === 'concept' || s.type === 'practical') {
+      html += `<div class="card">
+        <div class="card-label">${s.type === 'concept' ? 'Concept' : 'Practical Use'}</div>
+        <div class="card-title">${s.title}</div>
+        <div class="card-body">${s.content}</div>
+      </div>`;
+    } else if (s.type === 'formula') {
+      html += `<div class="card">
+        <div class="card-label">Formula</div>
+        <div class="card-title">${s.title}</div>
+        <div class="formula-block">${s.formula}</div>
+        ${s.notes.map(n => `<div class="note"><span class="note-arrow">›</span><span>${n}</span></div>`).join('')}
+      </div>`;
+    } else if (s.type === 'question') {
+      const qid = `q-${i}-${si}`;
+      html += `<div class="card">
+        <div class="card-label">Practice Question</div>
+        <p style="font-size:14px;line-height:1.75;color:#111;margin-bottom:16px">${s.q}</p>
+        ${s.opts.map((o, oi) => `<button class="opt-btn" id="${qid}-opt-${oi}" onclick="answer('${qid}',${oi},${s.ans})">${String.fromCharCode(65+oi)}) ${o}</button>`).join('')}
+        <div class="explanation" id="${qid}-exp"><strong>Explanation</strong>${s.exp}</div>
+      </div>`;
+    }
+  });
+
+  html += `<div class="nav-row">
+    <button class="nav-prev" onclick="loadTopic(${i-1})" ${i===0?'disabled':''}>← Previous</button>
+    <button class="nav-next" onclick="loadTopic(${i+1})" ${i===topics.length-1?'disabled':''}>Next →</button>
+  </div>`;
+
+  content.innerHTML = html;
+  content.scrollTop = 0;
+}
+
+function answer(qid, selected, correct) {
+  for (let i = 0; i < 4; i++) {
+    const btn = document.getElementById(`${qid}-opt-${i}`);
+    if (!btn) continue;
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === selected) btn.classList.add('wrong');
+    else btn.classList.add('dimmed');
+  }
+  document.getElementById(`${qid}-exp`).style.display = 'block';
+}
+
+buildSidebar();
+buildAboutTopics();
+loadTopic(0);
+</script>
+</body>
+</html>
